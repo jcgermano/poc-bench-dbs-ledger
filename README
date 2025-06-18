@@ -1,0 +1,21 @@
+
+
+
+DEPENCIAS
+
+curl -Lo tigerbeetle.zip https://mac.tigerbeetle.com
+unzip tigerbeetle.zip
+chmod +x tigerbeetle
+
+./tigerbeetle format --cluster=0 --replica=0 --replica-count=1 --development 0_0.tigerbeetle
+
+go get github.com/lib/pq
+go get github.com/codenotary/immudb/pkg/client
+go get github.com/tigerbeetle/tigerbeetle-go
+
+
+RUN
+
+go run main.go
+
+

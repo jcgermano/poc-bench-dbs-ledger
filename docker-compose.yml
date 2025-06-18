@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: poc_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: ledger
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./postgres/init_postgres.sql:/docker-entrypoint-initdb.d/init_postgres.sql
+    networks:
+      - internal
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+
+  immudb:
+    image: codenotary/immudb:latest
+    container_name: poc_immudb
+    ports:
+      - "3322:3322"
+      - "9497:9497"
+      - "8080:8080"     # Porta REST (Dashboard)
+    networks:
+      - internal
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  pg_data:
+  tb_data:
